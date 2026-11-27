@@ -21,6 +21,14 @@ interface AuthResponse {
   user: User;
 }
 
+interface RecoveryPassPayload {
+  email: string;
+}
+
+interface MessageResponse {
+  message: string;
+}
+
 export async function loginRequest(payload: LoginPayload) {
   return apiFetch<AuthResponse>("/auth/login", {
     method: "POST",
@@ -30,6 +38,13 @@ export async function loginRequest(payload: LoginPayload) {
 
 export async function registerRequest(payload: RegisterPayload) {
   return apiFetch<AuthResponse>("/auth/register", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function recoveryPassRequest(payload: RecoveryPassPayload) {
+  return apiFetch<MessageResponse>("/auth/recovery-pass", {
     method: "POST",
     body: JSON.stringify(payload),
   });
