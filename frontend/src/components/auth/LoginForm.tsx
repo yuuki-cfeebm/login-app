@@ -34,7 +34,7 @@ export default function LoginForm() {
 
   return (
     <div>
-      <HeaderForm title="Login" description="Entre com sua conta" />
+      <HeaderForm title="Login" description="Entre com sua conta, informando seu email e senha" />
 
       <form
         onSubmit={handleSubmitForm}
@@ -57,7 +57,7 @@ export default function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Link
-            className="text-sm ml-1 mt-1 text-[#2b7fff]"
+            className="text-sm ml-1 mt-1 text-main"
             href="/password-recovery"
           >
             Esqueceu sua senha?

@@ -14,7 +14,7 @@ export default function FieldForm({
   onChange,
 }: FieldFormProps) {
   return (
-    <label className="relative border border-gray-200 focus-within:border-[#2b7fff] rounded-xl w-full transition-all">
+    <label className="relative border border-gray-200 focus-within:border-main rounded-xl w-full transition-all">
       <span className="absolute -top-3 left-2 bg-white px-1 text-zinc-500  text-sm">
         {label}
       </span>

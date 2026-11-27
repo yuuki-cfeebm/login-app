@@ -6,18 +6,17 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
   const path = usePathname()
 
-  console.log("path", path)
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 p-2">
       <main className="relative flex items-center justify-center p-6 sm:p-10">
         <a className="absolute top-1 right-1 text-sm" href={`${path == "/register" ? "/login" : "/register"}`}>
-          {path === "/register" ? (
+          {path === "/login" ? (
             <span>
-              Já tem uma conta? <strong className="text-[#2b7fff] hover:underline">Entrar</strong>
+              Não tem conta? <strong className="text-main hover:underline">Cadastre-se</strong>
             </span>
           ) : (
             <span>
-              Não tem conta? <strong className="text-[#2b7fff] hover:underline">Cadastre-se</strong>
+              Já tem uma conta? <strong className="text-main hover:underline">Entrar</strong>
             </span>
           )}
         </a>

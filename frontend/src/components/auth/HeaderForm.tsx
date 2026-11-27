@@ -8,7 +8,7 @@ interface HeaderFormProps {
 export default function HeaderForm({ title, description }: HeaderFormProps){
   return(
     <div className="flex flex-col items-center">
-      <div className="relative w-12 h-12 mb-5 stroke-blue-500 text-blue-500">
+      <div className="relative w-12 h-12 mb-5">
         <Image
           src="/images/logo-form.svg"
           alt="Logo do formulário"

@@ -36,7 +36,7 @@ export default function RegisterForm() {
 
   return( 
     <div>
-      <HeaderForm title="Cadastrar-se" description="Crie uma conta" />
+      <HeaderForm title="Cadastre-se" description="Crie uma conta, informando seu nome, email e senha" />
 
       <form
         onSubmit={handleSubmitForm}
