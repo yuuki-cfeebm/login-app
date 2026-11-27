@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
+import crypto from "node:crypto";
 import {
   authMiddleware,
   type AuthRequest,
@@ -19,6 +20,10 @@ const registerSchema = z.object({
 const loginSchema = z.object({
   email: z.string().email("E-mail inválido"),
   password: z.string().min(1, "Senha é obrigatória"),
+});
+
+const recoverySchema = z.object({
+  email: z.string().email("E-mail inválido"),
 });
 
 // 1. CADASTRO
@@ -106,3 +111,38 @@ authRoutes.post("/logout", (_req, res) => {
   res.clearCookie("token");
   return res.json({ message: "Logout realizado com sucesso" });
 });
+
+// 5. Recovery Pass
+authRoutes.post('/recovery-pass', async (req, res) => {
+  const parsed = recoverySchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res
+      .status(400)
+      .json({ error: parsed.error.issues[0]?.message ?? "E-mail inválido" });
+  }
+
+  const { email } = parsed.data;
+
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  if (user) {
+    // Gera um código numérico de 6 dígitos (ex: "394812")
+    const code = crypto.randomInt(100000, 999999).toString();
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutos
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        resetCode: code,
+        resetCodeExpiresAt: expiresAt,
+      },
+    });
+
+    // Para testar agora sem configurar servidor de e-mail:
+    console.log(`[RECUPERAÇÃO] Código para ${email}: ${code}`);
+  }
+
+  return res.json({
+    message: "Se o e-mail existir, um código de recuperação foi enviado.",
+  });
+})
